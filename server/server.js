@@ -18,13 +18,22 @@ app.use(express.static(publicPath));
 // on() lets you register an event listener
 // socket argument - represents the individual socket connected to server
 io.on('connection', (socket) => {
+    const admin = 'admin@hatenolabs.com';
     console.log('New user connected.');
 
-    // socket.emit('newMessage', {
-    //     from: 'link@hyrule.com',
-    //     text: 'Hey Sidon. What up?',
-    //     createdAt: new Date().getTime(),
-    // });
+    // socket.emit from Admin
+    socket.emit('newMessage', {
+        from: admin,
+        text: 'Welcome to the chat app!',
+        createdAt: new Date().getTime(),
+    });
+
+    // socket.broadcast.emit from Admin
+    socket.broadcast.emit('newMessage', {
+        from: admin,
+        text: 'New user has joined.',
+        createdAt: new Date().getTime(),
+    });
 
     socket.on('createMessage', (message) => {
         io.emit('newMessage', {
