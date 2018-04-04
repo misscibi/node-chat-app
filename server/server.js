@@ -29,7 +29,7 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('newMessage', generateMessage(admin, 'New user has joined.'));
 
     socket.on('createMessage', (message) => {
-        generateMessage(message.from, message.text);
+        io.emit('newMessage', generateMessage(message.from, message.text));
     });
 
     socket.on('disconnect', () => {
