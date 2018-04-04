@@ -17,4 +17,26 @@ socket.on('disconnect', () => {
 
 socket.on('newMessage', (message) => {
     console.log('New message:', message);
+    let li = jQuery('<li></li>'); // use JQuery to create an element
+    li.text(`${message.from}: ${message.text}`);
+
+    jQuery('#messages').append(li);
+});
+
+// socket.emit('createMessage', {
+//     from: 'Link',
+//     text: 'Hi',
+// }, function (data) {
+//     console.log('Got it', data);
+// });
+
+jQuery('#message-form').on('submit', function (event) {
+    event.preventDefault();
+
+    socket.emit('createMessage', {
+        from: 'Anonymous',
+        text: jQuery('[name=message]').val(),
+    }, function () {
+
+    });
 });
