@@ -1,0 +1,16 @@
+{
+  "name": "node-chat-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": ""
+  },
+  "engines": {
+    "node": "9.8.0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
