@@ -3,7 +3,8 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 
-const { generateMessage } = require('./utils/message');
+const { generateMessage, generateLocationMessage } = require('./utils/message');
+
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
 const app = express();
@@ -19,7 +20,7 @@ app.use(express.static(publicPath));
 // on() lets you register an event listener
 // socket argument - represents the individual socket connected to server
 io.on('connection', (socket) => {
-    const admin = 'admin@hatenolabs.com';
+    const admin = 'overlord';
     console.log('New user connected.');
 
     // socket.emit from Admin
@@ -31,6 +32,10 @@ io.on('connection', (socket) => {
     socket.on('createMessage', (message, callback) => {
         io.emit('newMessage', generateMessage(message.from, message.text));
         callback('This is from the server.');
+    });
+
+    socket.on('createLocationMessage', (coords) => {
+        io.emit('newLocationMessage', generateLocationMessage(admin, coords.latitude, coords.longitude));
     });
 
     socket.on('disconnect', () => {
