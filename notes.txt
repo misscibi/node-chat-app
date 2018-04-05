@@ -10,7 +10,6 @@ http://links.mead.io/chat-css
 
 
 If you just need to disable inspections on one or two files, you can disable it at the file level easily:
-
 Open offending file
 Click 'Code' -> 'Current File Analysis'
 Set slider for offending language to 'None'
