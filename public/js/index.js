@@ -4,11 +4,6 @@ const socket = io();
 // ES6 features ain't working for other browsers
 socket.on('connect', () => {
     console.log('Connected to server.');
-
-    // socket.emit('createMessage', {
-    //     from: 'sidon@zora.com',
-    //     text: 'Sidon is connected.',
-    // });
 });
 
 socket.on('disconnect', () => {
@@ -38,11 +33,14 @@ socket.on('newLocationMessage', (message) => {
 jQuery('#message-form').on('submit', (event) => {
     event.preventDefault();
 
+    const messageTextbox = jQuery('[name=message]');
+
     socket.emit('createMessage', {
         from: 'anonymous',
-        text: jQuery('[name=message]').val(),
+        text: messageTextbox.val(),
     }, () => {
-
+        // acknowledgement callback
+        messageTextbox.val('');
     });
 });
 
@@ -53,12 +51,16 @@ locationButton.on('click', (event) => {
         return alert('Geolocation not supported by your browser.');
     }
 
+    locationButton.attr('disabled', 'disabled').text('Sharing location...');
+
     navigator.geolocation.getCurrentPosition((position) => {
+        locationButton.removeAttr('disabled').text('Share location');
         socket.emit('createLocationMessage', {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
         });
     }, () => {
+        locationButton.removeAttr('disabled').text('Share location');
         alert('Unable to fetch location.');
     });
 });
