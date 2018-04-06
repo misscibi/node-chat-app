@@ -19,3 +19,5 @@ window.location.search
 "?name=Link&room=Hyrule"
 jQuery.param({name: 'Link', age: 18})
 "name=Link&age=18"
+
+C:\Users\CB\WebstormProjects\node-chat-app>heroku logs
