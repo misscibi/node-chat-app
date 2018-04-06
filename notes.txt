@@ -13,3 +13,9 @@ If you just need to disable inspections on one or two files, you can disable it 
 Open offending file
 Click 'Code' -> 'Current File Analysis'
 Set slider for offending language to 'None'
+
+
+window.location.search
+"?name=Link&room=Hyrule"
+jQuery.param({name: 'Link', age: 18})
+"name=Link&age=18"

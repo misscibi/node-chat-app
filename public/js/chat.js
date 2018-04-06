@@ -21,10 +21,28 @@ const scrollToBottom = () => {
 // ES6 features ain't working for other browsers
 socket.on('connect', () => {
     console.log('Connected to server.');
+    const query = window.location.search.substring(1);
+    const params = jQuery.deparam(query);
+
+    socket.emit('join', params, (error) => {
+        if (error) {
+            window.location.href = '/';
+        }
+    });
 });
 
 socket.on('disconnect', () => {
     console.log('Disconnected from server.');
+});
+
+socket.on('updateUserList', (users) => {
+    const ol = jQuery('<ol></ol>');
+
+    users.forEach((user) => {
+        ol.append(jQuery('<li></li>').text(user));
+    });
+
+    jQuery('#users').html(ol);
 });
 
 socket.on('newMessage', (message) => {
