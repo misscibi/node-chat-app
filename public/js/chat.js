@@ -77,7 +77,6 @@ jQuery('#message-form').on('submit', (event) => {
     const messageTextbox = jQuery('[name=message]');
 
     socket.emit('createMessage', {
-        from: 'anonymous',
         text: messageTextbox.val(),
     }, () => {
         // acknowledgement callback

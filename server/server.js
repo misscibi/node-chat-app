@@ -23,7 +23,7 @@ app.use(express.static(publicPath));
 // on() lets you register an event listener
 // socket argument - represents the individual socket connected to server
 io.on('connection', (socket) => {
-    const admin = 'overlord';
+    const admin = 'Overlord';
     console.log('New user connected.');
 
     // setting acknowledgements via callback
@@ -51,12 +51,21 @@ io.on('connection', (socket) => {
     });
 
     socket.on('createMessage', (message, callback) => {
-        io.emit('newMessage', generateMessage(message.from, message.text));
+        const user = users.getUser(socket.id);
+
+        if (user && isRealString(message.text)) {
+            io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
+        }
+
         callback('This is from the server.');
     });
 
     socket.on('createLocationMessage', (coords) => {
-        io.emit('newLocationMessage', generateLocationMessage(admin, coords.latitude, coords.longitude));
+        const user = users.getUser(socket.id);
+
+        if (user) {
+            io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude));
+        }
     });
 
     socket.on('disconnect', () => {
