@@ -5,7 +5,8 @@ This is a simple chat application utilizing Node.js, express and socket.io modul
 - [Available Scripts](#available-scripts)
   - [npm start](#npm-start)
   - [npm test](#npm-test)
-  - [npm test-watch](#npm-test-watch)
+  - [npm run build](#npm-run-build)
+  - [npm run eject](#npm-run-eject)
 
 ## Available Scripts
 
